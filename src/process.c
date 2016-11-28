@@ -1,5 +1,5 @@
 /*
-** process.c - 
+** process.c -
 */
 
 #include "mruby.h"
@@ -81,7 +81,7 @@ mrb_f_kill(mrb_state *mrb, mrb_value klass)
     }
   } else {
     mrb_raisef(mrb, E_TYPE_ERROR, "bad signal type %S",
-    	       mrb_obj_value(mrb_class(mrb, sigo)));
+             mrb_obj_value(mrb_class(mrb, sigo)));
   }
 
   sent = 0;
@@ -92,7 +92,7 @@ mrb_f_kill(mrb_state *mrb, mrb_value klass)
   while (argc-- > 0) {
     if (!mrb_fixnum_p(*argv)) {
       mrb_raisef(mrb, E_TYPE_ERROR, "wrong argument type %S (expected Fixnum)",
-      	         mrb_obj_value(mrb_class(mrb, *argv)));
+                 mrb_obj_value(mrb_class(mrb, *argv)));
     }
     if (kill(mrb_fixnum(*argv), signo) == -1)
       mrb_sys_fail(mrb, "kill");
@@ -376,6 +376,9 @@ mrb_mruby_process_gem_init(mrb_state *mrb)
   mrb_define_method(mrb, s, "stopped?", mrb_procstat_stopped, MRB_ARGS_NONE());
   mrb_define_method(mrb, s, "stopsig", mrb_procstat_stopsig, MRB_ARGS_NONE());
   mrb_define_method(mrb, s, "termsig", mrb_procstat_termsig, MRB_ARGS_NONE());
+
+  mrb_define_const(mrb, p, "WNOHANG", mrb_fixnum_value(WNOHANG));
+  mrb_define_const(mrb, p, "WUNTRACED", mrb_fixnum_value(WUNTRACED));
 
   mrb_gv_set(mrb, mrb_intern_lit(mrb, "$$"), mrb_fixnum_value((mrb_int)getpid()));
   mrb_gv_set(mrb, mrb_intern_lit(mrb, "$?"), mrb_nil_value());
