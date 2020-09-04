@@ -260,7 +260,7 @@ mrb_f_exit_common(mrb_state *mrb, int bang)
   } else if (mrb_type(status) == MRB_TT_FALSE) {
     istatus = EXIT_FAILURE;
   } else {
-    status = mrb_convert_type(mrb, status, MRB_TT_FIXNUM, "Integer", "to_int");
+    status = mrb_convert_type(mrb, status, MRB_TT_FIXNUM, MRB_SYM(to_int));
     istatus = mrb_fixnum(status);
   }
 
